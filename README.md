@@ -19,4 +19,5 @@ Another project LiKiLink is software for a Wemos D1 Mini board that listens to t
 and makes the console accessable via Telnet and posts the mesuremnt data to a MQTT server for 
 graphing and display.
 
-See: https://github.com/ulwur/LiPoKiller2
+See: https://github.com/ulwur/LiKILink
+
