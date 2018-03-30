@@ -36,7 +36,7 @@ long Starttime;
 long PrintInterval = 2000;
 long LastPrint;
 const float max_inbalance = 0.2;       //Max imbalande between cells
-const float min_start_voltage = 4.0;   //Dont start unless this voltage
+const float min_start_voltage = 3.9;   //Dont start unless this voltage
 int LastLoad = 254;                    //Start value for loadbalance
 const int SERIAL_BAUD_RATE = 19200;    //Adjust here the serial rate.
 
@@ -292,10 +292,10 @@ void loop() {
 	//checka obalans?
 
   //find the loads
-  if (voltage <= 3.80){load = 0;}
-  if (voltage > 3.800){load = 1;}
-  if (voltage > 3.850){load = 2;}
-  if (voltage > 3.900){load = 3;}
+  if (voltage <= 3.70){load = 0;}
+  if (voltage > 3.720){load = 1;}
+  if (voltage > 3.780){load = 2;}
+  if (voltage > 3.820){load = 3;}
   if (voltage > 4.000){load = 4;} 
   
 //  load = 1;   //Test only
