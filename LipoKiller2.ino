@@ -29,12 +29,14 @@ const float curr_calib = 1.00;
 // Misc //
 float Cells[4];  //Cells array for volatges
 float Current;
+float mAhs;
 int load;
 int CellCount;
 int CellsOK;
 long Starttime;
-long PrintInterval = 2000;
+long PrintInterval = 5000;
 long LastPrint;
+long LastTime;
 const float max_inbalance = 0.2;       //Max imbalande between cells
 const float min_start_voltage = 3.9;   //Dont start unless this voltage
 int LastLoad = 254;                    //Start value for loadbalance
@@ -76,9 +78,11 @@ void printout (){
 	Row = Row + "Curr: " + String(Current) + ",\t";
 	
 	//Add load
-	Row = Row + "Load: " + String(load) + ",\n";
-	
-  
+	Row = Row + "Load: " + String(load) + ",\t";
+
+  //Add mAhs
+  Row = Row + "mAhs: " + String(mAhs) + ",\n";
+
   //Print to serial
   if (debug){Serial.println("Printging...");}
   Serial.println(Row);
@@ -269,16 +273,15 @@ void setup() {
 		stopSketch();
 	}
 
-	  //Print headline
 	  Serial.println(F("\n\n\n\n"));
-	  Serial.println(" Status\tTime\tCell1\tCell2\tCell3\tCell4\tCurrent");
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
 //  load = 0;
   float voltage;
+  String SmAhs;
 
   sample_cells();
 
@@ -300,6 +303,11 @@ void loop() {
   
 //  load = 1;   //Test only
   apply_load(load);
+
+  //Calculate mAh's
+  mAhs = mAhs + ((millis() - LastTime) * Current)/3600;  // /1000 for ms, *1000 for mA
+  LastTime = millis();
+   
 
   if (load == 0) {
     Serial.println(F("\n\n Oper Finihed discharge. Program terminated"));
